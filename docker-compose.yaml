@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    environment:
+      DOMAIN: "https://vault.brgdrf.me"
+      EMAIL: "alec@brgdrf.me"
+      LOG_FILE: "/data/access.log"
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy-config:/config
+      - ./caddy-data:/data
+
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: always
+    secrets:
+      - vw_admin_token
+    depends_on:
+      - caddy
+    environment:
+      WEBSOCKET_ENABLED: "true"
+      ADMIN_TOKEN_FILE: /run/secrets/vw_admin_token
+    volumes:
+      - ./vaultwarden/data:/data
+
+secrets:
+  vw_admin_token:
+    file: ./secrets/vw_admin_token
