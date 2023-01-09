@@ -5,10 +5,8 @@ services:
     image: caddy:2
     restart: unless-stopped
     container_name: caddy
-    environment:
-      DOMAIN: "https://vault.brgdrf.me"
-      EMAIL: "alec@brgdrf.me"
-      LOG_FILE: "/data/access.log"
+    env_file:
+      - caddy.env 
     ports:
       - 80:80
       - 443:443
