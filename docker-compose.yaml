@@ -28,7 +28,22 @@ services:
       ADMIN_TOKEN_FILE: /run/secrets/vw_admin_token
     volumes:
       - ./vaultwarden/data:/data
-
+  
+  db:
+    image: postgres:15-alpine
+    container_name: db
+    restart: always
+    secrets:
+      - db_user_password
+    env_file:
+      - db.env
+    ports:
+      - 5432:5432
+    volumes:
+      - /mnt/brgdrf/db:/var/lib/postgresql/data
+  
 secrets:
   vw_admin_token:
     file: ./secrets/vw_admin_token
+  db_user_password:
+    file: ./secrets/db_user_password

@@ -1,4 +1,9 @@
-{$VAULT_DOMAIN}:443 {
+{
+  email {$EMAIL}
+  # acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+}
+
+{$VAULT_DOMAIN} {
   log {
     level INFO
     output file {$LOG_FILE} {
@@ -6,8 +11,6 @@
       roll_keep 10
     }
   }
-
-  tls {$EMAIL}
 
   encode gzip
 
@@ -17,3 +20,9 @@
        header_up X-Real-IP {remote_host}
   }
 }
+
+#{$XXXX_DOMAIN} {
+#  encode gzip zstd
+#  tls {$EMAIL}
+#  reverse_proxy {container_name}:{container_ext_port} 
+#}
