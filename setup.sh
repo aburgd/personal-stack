@@ -19,6 +19,9 @@ POSTGRES_DB=postgres" > db.env
 	'postgres' )
 		openssl rand -hex 32 > secrets/pg_user_password
 		;;
+	'nocodb' )
+		openssl rand -hex 32 > secrets/nc_jwt_secret
+		;;
 	'*' )
 		echo "Unknown service"
 		;;

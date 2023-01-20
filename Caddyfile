@@ -21,6 +21,12 @@
   }
 }
 
+{$NC_DOMAIN} {
+  encode gzip zstd
+  tls {$EMAIL}
+  reverse_proxy nocodb:8080
+}
+
 #{$XXXX_DOMAIN} {
 #  encode gzip zstd
 #  tls {$EMAIL}
