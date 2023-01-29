@@ -41,26 +41,9 @@ services:
       - 5432:5432
     volumes:
       - /mnt/brgdrf/postgres:/var/lib/postgresql/data
-
-  nocodb:
-    image: nocodb/nocodb:latest
-    container_name: nocodb
-    restart: always
-    depends_on:
-      - postgres
-    secrets:
-      - nc_jwt_secret
-    env_file:
-      - nocodb.env
-    ports:
-      - 8080:8080
-    volumes:
-      - /mnt/brgdrf/nc:/usr/app/data
   
 secrets:
   vw_admin_token:
     file: ./secrets/vw_admin_token
   pg_user_password:
     file: ./secrets/pg_user_password
-  nc_jwt_secret:
-    file: ./secrets/nc_jwt_secret
