@@ -41,9 +41,25 @@ services:
       - 5432:5432
     volumes:
       - /mnt/brgdrf/postgres:/var/lib/postgresql/data
-  
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: always
+    command: --save 60 1 --loglevel warning --requirepass $${REDIS_PASSWORD_FILE}
+    environment:
+      REDIS_PASSWORD_FILE: /run/secrets/red_user_password
+    secrets:
+      - red_user_password
+    ports:
+      - 6379:6379
+    volumes:
+      - /mnt/brgdrf/redis:/data
+
 secrets:
   vw_admin_token:
     file: ./secrets/vw_admin_token
   pg_user_password:
     file: ./secrets/pg_user_password
+  red_user_password:
+    file: ./secrets/red_user_password
