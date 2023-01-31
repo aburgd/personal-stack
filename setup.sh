@@ -11,7 +11,6 @@ DB_DOMAIN=‘https://db.doma.in’" > caddy.env
 		echo "POSTGRES_USER=postgres
 POSTGRES_PASSWORD_FILE=/run/secrets/db_user_password
 POSTGRES_DB=postgres" > db.env
-		touch nocodb.env
 		;;
 	'vaultwarden' )
 		openssl rand -hex 32 > secrets/vw_admin_token
