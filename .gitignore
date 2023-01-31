@@ -2,4 +2,4 @@
 secrets/
 *.log
 caddy-*/
-*.env
+/*.env
