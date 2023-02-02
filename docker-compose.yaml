@@ -56,6 +56,17 @@ services:
     volumes:
       - /mnt/brgdrf/redis:/data
 
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    env_file:
+      - mongo.env
+    secrets:
+      - md_initdb_password
+    ports:
+      - 27017:27017
+
 secrets:
   vw_admin_token:
     file: ./secrets/vw_admin_token
@@ -63,3 +74,5 @@ secrets:
     file: ./secrets/pg_user_password
   red_user_password:
     file: ./secrets/red_user_password
+  md_initdb_password:
+    file: ./secrets/md_initdb_password
