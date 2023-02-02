@@ -21,6 +21,12 @@ POSTGRES_DB=postgres" > db.env
 	'redis' )
 		openssl rand -hex 32 > secrets/red_user_password
 		;;
+	'appsmith' )
+		openssl rand -hex 32 > secrets/gr_session_secret
+		;;
+	'env' )
+		cp sample/* ./
+		;;
 	'*' )
 		echo "Unknown service"
 		;;
