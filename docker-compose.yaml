@@ -67,6 +67,15 @@ services:
     ports:
       - 27017:27017
 
+  appsmith:
+    image: appsmith/appsmith-ce
+    container_name: appsmith
+    restart: always
+    depends_on:
+      - caddy
+    volumes:
+      - /mnt/brgdrf/appsmith:/appsmith-stacks
+
 secrets:
   vw_admin_token:
     file: ./secrets/vw_admin_token
