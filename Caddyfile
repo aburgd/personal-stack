@@ -27,5 +27,5 @@
 
 
 {$APPSMITH_DOMAIN} {
-  import default_tls appsmith:80
+  import default_tls appsmith 80
 }
