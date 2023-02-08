@@ -3,7 +3,17 @@
   #acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
 }
 
+(default_tls) {
+  encode gzip
+  tls {$EMAIL}
+  reverse_proxy {args.0}:{args.1} {
+    header_up X-Real-IP {remote_host}
+  }
+}
+
 {$VAULT_DOMAIN} {
+  import default_tls vaultwarden 80
+
   log {
     level INFO
     output file {$LOG_FILE} {
@@ -12,29 +22,10 @@
     }
   }
 
-  encode gzip
-
   reverse_proxy /notifications/hub vaultwarden:3012
-
-  reverse_proxy vaultwarden:80 {
-       header_up X-Real-IP {remote_host}
-  }
 }
 
-{$POSTGRES_DOMAIN} {
-  encode gzip zstd
-  tls {$EMAIL}
-  reverse_proxy postgres:5432
-}
 
 {$APPSMITH_DOMAIN} {
-  encode gzip
-  tls {$EMAIL}
-  reverse_proxy appsmith:80
+  import default_tls appsmith:80
 }
-
-#{$XXXX_DOMAIN} {
-#  encode gzip zstd
-#  tls {$EMAIL}
-#  reverse_proxy {container_name}:{container_ext_port} 
-#}
