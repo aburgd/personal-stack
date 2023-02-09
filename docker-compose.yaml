@@ -76,6 +76,22 @@ services:
     volumes:
       - /mnt/brgdrf/appsmith:/appsmith-stacks
 
+  adguardhome:
+    image: adguard/adguardhome:latest
+    container_name: adguardhome
+    restart: always
+    ports:
+      - 53:53
+      - 3000:3000
+      - 784:784
+      - 853:853
+      - 8853:8853
+      - 5443:5443
+    volumes:
+      - /mnt/brgdrf/certs/certificates:/data/certs:ro
+      - /mnt/brgdrf/adguard/work:/opt/adguardhome/work
+      - /mnt/brgdrf/adguard/conf:/opt/adguardhome/conf
+
 secrets:
   vw_admin_token:
     file: ./secrets/vw_admin_token

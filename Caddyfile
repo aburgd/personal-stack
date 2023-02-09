@@ -29,3 +29,7 @@
 {$APPSMITH_DOMAIN} {
   import default_tls appsmith 80
 }
+
+{$ADGUARD_DOMAIN} {
+  import default_tls adguardhome 80
+}
