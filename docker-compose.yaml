@@ -40,7 +40,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - /mnt/brgdrf/postgres:/var/lib/postgresql/data
+      - ${DC_VOLUME_PATH}/postgres:/var/lib/postgresql/data
 
   redis:
     image: redis:7-alpine
@@ -54,7 +54,7 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - /mnt/brgdrf/redis:/data
+      - ${DC_VOLUME_PATH}/redis:/data
 
   mongo:
     image: mongo:latest
@@ -74,7 +74,7 @@ services:
     depends_on:
       - caddy
     volumes:
-      - /mnt/brgdrf/appsmith:/appsmith-stacks
+      - ${DC_VOLUME_PATH}/appsmith:/appsmith-stacks
 
   adguardhome:
     image: adguard/adguardhome:latest
@@ -88,9 +88,9 @@ services:
       - 8853:8853
       - 5443:5443
     volumes:
-      - /mnt/brgdrf/certs/certificates:/data/certs:ro
-      - /mnt/brgdrf/adguard/work:/opt/adguardhome/work
-      - /mnt/brgdrf/adguard/conf:/opt/adguardhome/conf
+      - ${DC_VOLUME_PATH}/certs/certificates:/data/certs:ro
+      - ${DC_VOLUME_PATH}/adguard/work:/opt/adguardhome/work
+      - ${DC_VOLUME_PATH}/adguard/conf:/opt/adguardhome/conf
 
 secrets:
   vw_admin_token:
@@ -101,3 +101,7 @@ secrets:
     file: ./secrets/red_user_password
   md_initdb_password:
     file: ./secrets/md_initdb_password
+  kc_postgres_password:
+    file: ./secrets/kc_postgres_password
+  kc_admin_password:
+    file: ./secrets/kc_admin_password
